@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { X, Loader2 } from "lucide-react";
 import { CategorySelector } from "./CategorySelector";
 import { CoverUploader } from "./CoverUploader";
-import comicApi from "@/api/comic";
 import { convertCoverImage } from "@/utils/imageConverter";
+import comicApi from "@/features/comic/api";
 
 interface CreateComicModalProps {
   isOpen: boolean;

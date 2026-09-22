@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getComicStatusConfig } from "@/utils/comicStatus";
-import type { ComicInfoCardProps } from "../types";
+import type { ComicInfoCardProps } from "./types";
 
 export const ComicInfoCard: React.FC<ComicInfoCardProps> = ({
   comic,

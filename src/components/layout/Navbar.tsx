@@ -11,7 +11,7 @@ import {
 import { Button } from "../ui/Button";
 import { useNavigate } from "react-router-dom";
 import { getUserFromToken, type UserProfile } from "@/utils/jwt";
-import authApi from "@/api/auth";
+import authApi from "@/features/auth/api";
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -154,14 +154,14 @@ export const Navbar: React.FC = () => {
                   <div className="text-sm font-bold text-slate-800 leading-tight">
                     {username}
                   </div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  {/* <div className="text-xs text-slate-400 mt-0.5">
                     @{username}
-                  </div>
+                  </div> */}
 
                   {/* Badge Chức Vụ */}
                   {isAdmin ? (
                     <span className="inline-flex items-center gap-1 mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200/60 tracking-wider">
-                      ★ QUẢN TRỊ VIÊN
+                      QUẢN TRỊ VIÊN
                     </span>
                   ) : (
                     <span className="inline-block mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-600 border border-indigo-100 tracking-wider">

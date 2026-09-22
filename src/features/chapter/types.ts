@@ -6,34 +6,31 @@ export interface ChapterItem {
   createdAt: string;
 }
 
-export interface UploadedImageItem {
-  id: string;
-  file: File;
-  previewUrl: string;
+export interface ChapterApiItem {
+  id: number;
+  comicId: number;
+  chapterNumber: number;
+  title: string | null;
+  status?: string;
+  uploadStatus?: string;
+  storagePath?: string;
+  totalPages: number;
+  views?: number;
 }
 
-export interface ProgressState {
-  completed: number;
-  total: number;
-  percent: number;
+export interface ChapterDetailData {
+  id: number;
+  comicId: number;
+  chapterNumber: number;
+  title: string | null;
+  totalPages: number;
+  pages: string[];
+  prevChapterId: number | null;
+  nextChapterId: number | null;
 }
 
-export interface AddChapterModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  comicTitle?: string;
-  onSubmit?: (data: {
-    chapterNumber: string;
-    title: string;
-    files: File[];
-  }) => void;
-}
-
-export interface ChapterListSectionProps {
-  chapters: ChapterItem[];
-  isAdmin: boolean;
-  isSortDesc: boolean;
-  onSortChapters: () => void;
-  onOpenAddChapterModal: () => void;
-  getChapterUrl: (chapterNumber: number) => string;
+export interface ChapterCreatePayload {
+  title?: string;
+  chapterNumber: number | string;
+  files: File[];
 }
