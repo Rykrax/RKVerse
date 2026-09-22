@@ -1,14 +1,15 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "@/pages/home/HomePage";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
+import HomePage from "@/features/home/pages/HomePage";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { PublicOnlyRoute } from "./PublicOnlyRoute";
 import { AdminRoute } from "./AdminRoute";
 import AdminComicPage from "@/pages/admin/AdminComicPage";
-import ComicDetailPage from "@/pages/comic/ComicDetailPage";
-import ChapterDetailPage from "@/pages/comic/ChapterDetailPage";
+// import ChapterDetailPage from "@/pages/comic/ChapterDetailPage";
+import ComicDetailPage from "@/features/comic/pages/ComicDetailPage";
+import LoginPage from "@/features/auth/pages/LoginPage";
+import RegisterPage from "@/features/auth/pages/RegisterPage";
+import ChapterDetailPage from "@/features/chapter/pages/ChapterDetailPage";
 
 export const AppRoutes: React.FC = () => {
   return (

@@ -2,14 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { getUserFromToken } from "@/utils/jwt";
-import comicApi, { type ComicApiItem } from "@/api/comic";
-import chapterApi from "@/api/chapter";
-import { ComicInfoCard } from "@/features/comic";
-import {
-  ChapterListSection,
-  AddChapterModal,
-  type ChapterItem,
-} from "@/features/chapter";
+import type { ComicApiItem } from "../../types";
+import { AddChapterModal, type ChapterItem } from "@/features/chapter";
+import comicApi from "../../api";
+import { ComicInfoCard } from "../../components/ComicInfoCard/index";
+import { ChapterListSection } from "../../components/ChapterListSection";
+import chapterApi from "@/features/chapter/api";
 
 export const ComicDetailPage: React.FC = () => {
   const { id, slugWithId } = useParams<{ id?: string; slugWithId?: string }>();
@@ -123,7 +121,6 @@ export const ComicDetailPage: React.FC = () => {
     }
 
     try {
-      // Gọi API createChapter
       await chapterApi.createChapter(comicId, {
         chapterNumber: data.chapterNumber,
         title: data.title,
@@ -175,7 +172,7 @@ export const ComicDetailPage: React.FC = () => {
   const firstChapterId =
     chapters.length > 0 ? chapters[chapters.length - 1].id : null;
   const latestChapterId = chapters.length > 0 ? chapters[0].id : null;
-  console.log(firstChapterId, latestChapterId);
+  //   console.log(firstChapterId, latestChapterId);
 
   if (loading) {
     return (

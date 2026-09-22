@@ -1,6 +1,6 @@
 import React from "react";
-import { RegisterForm } from "../../features/auth/components/RegisterForm";
-import { Navbar } from "../../components/layout/Navbar";
+import { Navbar } from "@/components/layout/Navbar";
+import { RegisterForm } from "../components/RegisterForm";
 
 export const RegisterPage: React.FC = () => {
   return (

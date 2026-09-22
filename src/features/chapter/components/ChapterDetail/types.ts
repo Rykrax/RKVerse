@@ -4,11 +4,12 @@ export interface ChapterItem {
   slug?: string;
 }
 
-export interface ChapterDetailData {
-  id: string | number;
+export interface ChapterUIData {
+  id: number;
   name: string;
   comicTitle: string;
   description: string;
   pages: string[];
-  totalChapters?: number;
+  prevChapterId?: number | null;
+  nextChapterId?: number | null;
 }

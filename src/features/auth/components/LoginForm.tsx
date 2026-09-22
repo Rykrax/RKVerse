@@ -3,7 +3,7 @@ import { BookOpen, User, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { Input } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
-import authApi from "@/api/auth";
+import authApi from "../api";
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
