@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-import type { UploadedImageItem } from "../../types";
+import type { UploadedImageItem } from "./types";
 
 interface ImagePreviewModalProps {
   image: UploadedImageItem | null;
