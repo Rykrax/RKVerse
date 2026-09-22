@@ -1,6 +1,6 @@
 import React from "react";
 import { UploadCloud, FileArchive, Loader2 } from "lucide-react";
-import type { ProgressState } from "../../types";
+import type { ProgressState } from "./types";
 
 interface DropzoneUploaderProps {
   isProcessing: boolean;

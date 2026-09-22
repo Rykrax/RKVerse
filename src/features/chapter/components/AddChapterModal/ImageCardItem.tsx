@@ -1,6 +1,6 @@
 import React from "react";
 import { GripVertical, Trash2, Maximize2 } from "lucide-react";
-import type { UploadedImageItem } from "../../types";
+import type { UploadedImageItem } from "./types";
 
 interface ImageCardItemProps {
   item: UploadedImageItem;
