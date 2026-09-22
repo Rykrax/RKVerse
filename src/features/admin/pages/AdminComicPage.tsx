@@ -2,10 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { PlusCircle, Eye, Heart, Edit3, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getUserFromToken } from "@/utils/jwt";
-import { type ComicApiItem } from "@/features/comic/types";
+import comicApi, { type ComicApiItem } from "@/api/comic";
 import { CreateComicModal } from "@/features/admin/components/CreateComicModal";
 import { getComicStatusConfig } from "@/utils/comicStatus";
-import comicApi from "@/features/comic/api";
 
 interface AdminComicItem extends ComicApiItem {
   status?: string;

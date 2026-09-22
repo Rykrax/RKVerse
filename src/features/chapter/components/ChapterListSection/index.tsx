@@ -1,16 +1,7 @@
 import React from "react";
 import { BookOpen, ArrowUpDown, PlusCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import type { ChapterItem } from "@/features/comic/components/types";
-
-interface ChapterListSectionProps {
-  chapters: ChapterItem[];
-  isAdmin: boolean;
-  isSortDesc: boolean;
-  onSortChapters: () => void;
-  onOpenAddChapterModal: () => void;
-  getChapterUrl: (chapterNumber: number) => string;
-}
+import { Link } from "react-router-dom";
+import type { ChapterListSectionProps } from "./types";
 
 export const ChapterListSection: React.FC<ChapterListSectionProps> = ({
   chapters,
@@ -20,8 +11,6 @@ export const ChapterListSection: React.FC<ChapterListSectionProps> = ({
   onOpenAddChapterModal,
   getChapterUrl,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <section className="bg-white rounded-3xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] p-6 sm:p-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -62,9 +51,9 @@ export const ChapterListSection: React.FC<ChapterListSectionProps> = ({
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
           {chapters.map((chap) => (
-            <div
+            <Link
               key={chap.id}
-              onClick={() => navigate(getChapterUrl(chap.chapterNumber))}
+              to={getChapterUrl(chap.chapterNumber)}
               className="group cursor-pointer p-3.5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-indigo-50/40 hover:border-indigo-100 transition-all flex flex-col justify-between gap-1"
             >
               <span className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-1">
@@ -73,7 +62,7 @@ export const ChapterListSection: React.FC<ChapterListSectionProps> = ({
               <span className="text-[11px] text-slate-400 font-medium">
                 {chap.createdAt}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
       )}

@@ -1,6 +1,6 @@
 import React from "react";
-import { Navbar } from "../../components/layout/Navbar";
-import { LoginForm } from "../../features/auth/components/LoginForm";
+import { Navbar } from "@/components/layout/Navbar";
+import { LoginForm } from "../components/LoginForm";
 
 export const LoginPage: React.FC = () => {
   return (

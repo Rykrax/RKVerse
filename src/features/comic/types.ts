@@ -1,16 +1,43 @@
-import type { ComicApiItem } from "@/api/comic";
+export interface ComicApiItem {
+  id: number;
+  title: string;
+  slug: string;
+  author?: string;
+  coverPath: string;
+  description?: string;
+  views?: number;
+  status?: string;
+}
 
-export interface ComicInfoCardProps {
-  comic: ComicApiItem;
-  isAdmin: boolean;
-  isLiked: boolean;
-  likeCount: number;
-  userRating: number;
-  hoverRating: number;
-  firstChapterUrl: string;
-  latestChapterUrl: string;
-  onToggleLike: () => void;
-  onDeleteComic: () => void;
-  onHoverRating: (val: number) => void;
-  onSetRating: (val: number) => void;
+export interface ComicPageData {
+  items: ComicApiItem[];
+  last: boolean;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
+// request
+export interface CreateComicRequest {
+  title: string;
+  slug?: string;
+  author?: string;
+  description?: string;
+  coverImage?: File;
+  categoryIds?: number[];
+  [key: string]: any;
+}
+
+// response
+export interface ComicListResponse {
+  status: number;
+  message: string;
+  data: ComicPageData;
+}
+
+export interface ComicCreateResponse {
+  status: number;
+  message: string;
+  data: ComicApiItem;
 }

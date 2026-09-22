@@ -6,7 +6,7 @@ import type {
   UploadedImageItem,
   AddChapterModalProps,
   ProgressState,
-} from "../../types";
+} from "./types";
 import { DropzoneUploader } from "./DropzoneUploader";
 import { ImageCardItem } from "./ImageCardItem";
 import { ImagePreviewModal } from "./ImagePreviewModal";

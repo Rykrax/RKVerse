@@ -1,4 +1,4 @@
-// src/pages/home/HomePage.tsx
+// features/home/pages/HomePage.tsx
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { HeroBanner } from "@/features/home/components/HeroBanner";
@@ -9,8 +9,8 @@ import {
   type ComicItem,
 } from "@/features/home/components/ComicCard";
 import { Pagination } from "@/components/ui/Pagination";
-import comicApi from "@/api/comic";
 import { useNavigate } from "react-router-dom";
+import comicApi from "@/features/comic/api";
 
 const CATEGORIES = [
   "Tất cả",
@@ -43,7 +43,7 @@ export const HomePage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const pageSize = 10;
 
-  // Lọc & sắp xếp
+  // Lọc và sắp xếp
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [selectedStatus, setSelectedStatus] = useState("Tất cả");
   const [selectedSort, setSelectedSort] = useState("newest");
@@ -150,7 +150,6 @@ export const HomePage: React.FC = () => {
             ))}
           </section>
 
-          {/* Thanh phân trang ở đáy danh sách */}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

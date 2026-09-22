@@ -3,7 +3,7 @@ import { BookOpen, User, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
-import authApi from "../../../api/auth"; // Điều chỉnh lại path import authApi cho khớp với project
+import authApi from "../api";
 
 export const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
