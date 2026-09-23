@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { User, Mail, Shield, KeyRound, LogOut } from "lucide-react";
+import { User, Mail, KeyRound, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { ProfileHeader } from "../../components/ProfileHeader";
 import { ProfileHeroCard } from "../../components/ProfileHeroCard";
