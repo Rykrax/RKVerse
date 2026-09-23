@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Input } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
 import authApi from "../api";
+import { useAuth } from "@/context/AuthContext";
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export const LoginForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +30,8 @@ export const LoginForm: React.FC = () => {
       const accessToken = res.data?.accessToken;
 
       if (accessToken) {
-        // 3. Lưu accessToken vào localStorage
-        localStorage.setItem("accessToken", accessToken);
+        await login(accessToken);
 
-        // 4. Chuyển hướng sang dashboard
         navigate("/");
       } else {
         setErrorMessage("Không nhận được mã xác thực từ máy chủ.");
