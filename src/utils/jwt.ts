@@ -3,6 +3,7 @@ export interface UserProfile {
   id?: string | number;
   sub?: string;
   username?: string;
+  displayName?: string;
   roles?: string[] | string;
   role?: string;
   [key: string]: unknown;

@@ -11,6 +11,8 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import ChapterDetailPage from "@/features/chapter/pages/ChapterDetailPage";
 import AdminComicPage from "@/features/admin/pages/AdminComicPage";
+import ProfilePage from "@/features/user/pages/ProfilePage";
+// import ProfilePage from
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -24,6 +26,8 @@ export const AppRoutes: React.FC = () => {
           path="/comic/:comicId/chapters/:chapterSlug"
           element={<ChapterDetailPage />}
         />
+
+        <Route path="/profile" element={<ProfilePage />} />
 
         <Route element={<AdminRoute />}>
           <Route path="/admin/comics" element={<AdminComicPage />} />

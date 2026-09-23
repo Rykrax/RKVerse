@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
       localStorage.removeItem("accessToken");
       setUser(null);
       setIsDropdownOpen(false);
-      navigate("/login");
+      navigate("/");
     }
   };
 
@@ -67,6 +67,7 @@ export const Navbar: React.FC = () => {
   );
 
   const username = user?.username || "user";
+  const displayName = user?.displayName || user?.username;
   const avatarLetter = username.charAt(0).toUpperCase();
 
   return (
@@ -152,11 +153,11 @@ export const Navbar: React.FC = () => {
                 {/* Header Info */}
                 <div className="px-2 py-1.5">
                   <div className="text-sm font-bold text-slate-800 leading-tight">
-                    {username}
+                    {displayName}
                   </div>
-                  {/* <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="text-xs text-slate-400 mt-0.5">
                     @{username}
-                  </div> */}
+                  </div>
 
                   {/* Badge Chức Vụ */}
                   {isAdmin ? (
