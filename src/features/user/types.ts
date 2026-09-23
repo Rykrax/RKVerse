@@ -1,8 +1,9 @@
 export interface ProfileData {
+  id: number | string;
   username: string;
   email?: string;
   displayName?: string;
-  role?: string;
+  roles?: string[];
 }
 
 export interface UserProfile {
@@ -12,4 +13,8 @@ export interface UserProfile {
   email: string;
   role: string;
   roleLabel?: string;
+}
+
+export interface changeDisplayNamePayload {
+  displayName: string;
 }

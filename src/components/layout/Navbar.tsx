@@ -10,20 +10,13 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useNavigate } from "react-router-dom";
-import { getUserFromToken, type UserProfile } from "@/utils/jwt";
-import authApi from "@/features/auth/api";
+import { useAuth } from "@/context/AuthContext";
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const { user, isAuthenticated, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Lấy thông tin user khi component mount
-  useEffect(() => {
-    const currentUser = getUserFromToken();
-    setUser(currentUser);
-  }, []);
 
   // Đóng dropdown khi click ra ngoài vùng menu
   useEffect(() => {
@@ -40,20 +33,13 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await authApi.logout();
-    } catch (error) {
-      console.warn("Backend logout error, proceeding client cleanup", error);
-    } finally {
-      localStorage.removeItem("accessToken");
-      setUser(null);
-      setIsDropdownOpen(false);
-      navigate("/");
-    }
+    setIsDropdownOpen(false);
+    await logout();
+    navigate("/");
   };
 
-  // Trích xuất và kiểm tra role từ token (hỗ trợ cả dạng string và array)
-  const rawRoles = user?.roles || user?.role || [];
+  // Trích xuất và kiểm tra role từ user trong AuthContext
+  const rawRoles = user?.roles || (user as any)?.role || [];
   const userRoles = Array.isArray(rawRoles)
     ? rawRoles.map((r) => String(r).toUpperCase())
     : [String(rawRoles).toUpperCase()];
@@ -67,8 +53,8 @@ export const Navbar: React.FC = () => {
   );
 
   const username = user?.username || "user";
-  const displayName = user?.displayName || user?.username;
-  const avatarLetter = username.charAt(0).toUpperCase();
+  const displayName = user?.displayName || user?.username || "Người dùng";
+  const avatarLetter = (displayName || username).charAt(0).toUpperCase();
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-slate-100 px-6 lg:px-12 py-3 flex items-center justify-between">
@@ -103,7 +89,7 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Right Side Navigation */}
-      {user ? (
+      {isAuthenticated && user ? (
         <div className="flex items-center gap-3 sm:gap-4">
           {/* Nút Tủ Sách */}
           <button
@@ -133,15 +119,19 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               className="flex items-center gap-2 pl-1 pr-2.5 py-1 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"
+              title={displayName}
             >
-              <div className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-100">
+              <div className="w-7 h-7 shrink-0 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-100">
                 {avatarLetter}
               </div>
-              <span className="text-xs font-semibold text-slate-700 max-w-[90px] truncate">
-                {username}
+
+              {/* Tên hiển thị trên thanh điều hướng: Giới hạn độ dài và hiển thị dấu ba chấm */}
+              <span className="text-xs font-semibold text-slate-700 max-w-[90px] sm:max-w-[130px] truncate">
+                {displayName}
               </span>
+
               <ChevronDown
-                className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
+                className={`w-3.5 h-3.5 shrink-0 text-slate-400 transition-transform ${
                   isDropdownOpen ? "rotate-180" : ""
                 }`}
               />
@@ -152,10 +142,17 @@ export const Navbar: React.FC = () => {
               <div className="absolute right-0 mt-2.5 w-56 bg-white rounded-2xl shadow-[0_12px_36px_rgba(0,0,0,0.08)] border border-slate-100 p-3 z-50 animate-in fade-in zoom-in-95 duration-100">
                 {/* Header Info */}
                 <div className="px-2 py-1.5">
-                  <div className="text-sm font-bold text-slate-800 leading-tight">
+                  {/* Tên trong dropdown: Có truncate nếu quá 200px */}
+                  <div
+                    className="text-sm font-bold text-slate-800 leading-tight max-w-[190px] truncate"
+                    title={displayName}
+                  >
                     {displayName}
                   </div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div
+                    className="text-xs text-slate-400 mt-0.5 max-w-[190px] truncate"
+                    title={`@${username}`}
+                  >
                     @{username}
                   </div>
 
