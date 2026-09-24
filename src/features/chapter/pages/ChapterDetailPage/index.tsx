@@ -1,9 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import chapterApi, {
-//   type ChapterDetailData as ApiChapterDetail,
-//   type ChapterApiResponse,
-// } from "@/api/chapter";
 import {
   ChapterInfo,
   ChapterNavigation,
@@ -12,10 +8,6 @@ import {
   type ChapterUIData,
   type ChapterItem,
 } from "@/features/chapter/components/ChapterDetail";
-// import type {
-//   ChapterItem,
-//   ChapterDetailData,
-// } from "@/features/chapter/components/ChapterDetail";
 import type { ChapterApiItem, ChapterDetailData } from "../../types";
 import chapterApi from "../../api";
 
@@ -26,7 +18,6 @@ export const ChapterDetailPage: React.FC = () => {
   }>();
   const navigate = useNavigate();
 
-  // TÁCH LẤY ID SỐ TỪ SLUG: "dan-da-dan-1" -> 1
   const numericComicId = useMemo(() => {
     if (!rawComicId) return null;
     if (/^\d+$/.test(rawComicId)) return Number(rawComicId);
@@ -37,7 +28,6 @@ export const ChapterDetailPage: React.FC = () => {
     return null;
   }, [rawComicId]);
 
-  // 2. Lấy số chương: "chapter-1.2" -> "1.2", hoặc nếu người dùng gõ thẳng "1.2" vẫn nhận đúng
   const currentChapterNumber = useMemo(() => {
     if (!chapterSlug) return null;
     return chapterSlug.replace(/^chapter-/, "");
@@ -63,7 +53,6 @@ export const ChapterDetailPage: React.FC = () => {
         setLoading(true);
         setError(null);
 
-        // Gọi API với numericComicId và currentChapterNumber
         const [detailRes, listRes] = await Promise.all([
           chapterApi.getChapterDetail(numericComicId, currentChapterNumber),
           chapterApi.getChapters(numericComicId),
@@ -87,6 +76,45 @@ export const ChapterDetailPage: React.FC = () => {
     fetchData();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [numericComicId, currentChapterNumber, rawComicId]);
+
+  useEffect(() => {
+    if (!currentChapter?.id) return;
+
+    const chapterId = currentChapter.id;
+    let timer: NodeJS.Timeout | null = null;
+    let isCancelled = false;
+
+    const initViewSession = async () => {
+      try {
+        const res = await chapterApi.startReadingView(chapterId);
+
+        if (!res.data.eligible || !res.data.readToken || isCancelled) {
+          return;
+        }
+
+        const token = res.data.readToken;
+
+        timer = setTimeout(async () => {
+          if (isCancelled) return;
+          try {
+            await chapterApi.confirmReadingView(chapterId, token);
+          } catch (confirmErr) {}
+        }, 15000);
+      } catch (startErr) {
+        console.error("Lỗi khởi tạo phiên đọc:", startErr);
+      }
+    };
+
+    initViewSession();
+
+    return () => {
+      isCancelled = true;
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [currentChapter?.id]);
+  // =========================================================================
 
   const formattedChapterData: ChapterUIData | null = useMemo(() => {
     if (!currentChapter) return null;
