@@ -18,3 +18,9 @@ export interface UserProfile {
 export interface changeDisplayNamePayload {
   displayName: string;
 }
+
+export interface changePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
